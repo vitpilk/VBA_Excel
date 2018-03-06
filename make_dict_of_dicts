@@ -1,0 +1,25 @@
+Function make_dict_of_dicts(arr)
+    
+    Dim row As Long, kee, itm As String
+    Dim dict As New Scripting.Dictionary
+    
+    For row = LBound(arr, 1) + 1 To UBound(arr, 1) 'remove +1 if array has no header
+        kee = arr(row, 1)
+        itm = arr(row, 2)
+        
+            If Not dict.Exists(kee) Then
+                Dim list As New Scripting.Dictionary
+                list.Add itm, ""
+                dict.Add key:=kee, item:=list
+            ElseIf dict.Exists(kee) Then
+                If Not dict(kee).Exists(itm) Then
+                    dict(kee).Add itm, ""
+                End If
+            End If
+            Set list = Nothing
+
+    Next
+
+    Set make_dict_of_dicts = dict
+    
+End Function
