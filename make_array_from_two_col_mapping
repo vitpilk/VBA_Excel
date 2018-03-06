@@ -1,0 +1,9 @@
+Function make_array_from_two_col_mapping(wrksht As worksheet)
+
+    Dim lastrow As Long, arr As Variant
+    lastrow = wrksht.range("A" & wrksht.Rows.Count).End(xlUp).row
+    arr = wrksht.range("A1:B" & lastrow).Value
+    
+    make_array_from_two_col_mapping = arr
+
+End Function
