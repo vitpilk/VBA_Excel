@@ -1,4 +1,4 @@
-Function make_dict_of_dicts(arr)
+Function make_dict_of_dicts_from_array(arr)
     
     Dim row As Long, kee, itm As String
     Dim dict As New Scripting.Dictionary
