@@ -1,0 +1,25 @@
+Function Dictionarize_Two_Column_Range(Two_Column_Range)
+
+Dim arr As Variant
+arr = Two_Column_Range
+
+Dim row As Long, BR, TR As String
+Dim dict As New Scripting.Dictionary
+
+For row = LBound(arr, 1) To UBound(arr, 1)
+    BR = arr(row, 1)
+    TR = arr(row, 2)
+    Dim coll As Collection
+    Set coll = New Collection
+    
+    If Not dict.Exists(BR) Then
+        coll.Add TR
+        dict.Add key:=BR, item:=coll
+    ElseIf dict.Exists(BR) Then
+        dict(BR).Add TR
+    End If
+Next
+
+Set Dictionarize_Two_Column_Range = dict
+
+End Function
