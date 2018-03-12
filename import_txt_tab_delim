@@ -23,8 +23,9 @@ Private Sub Copy_Txt()
     target_wb = ActiveWorkbook.Name
     target_ws = ActiveSheet.Name
     
-    Result.Cells.Delete
-    txt_import.Cells.Delete
+    ''Result.Cells.Delete
+    ''txt_import.Cells.Delete
+    ActiveWorkseet.Cells.Delete
 
     Dim tbl As ListObject
     For Each tbl In ActiveSheet.ListObjects
