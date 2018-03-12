@@ -1,0 +1,85 @@
+Option Explicit
+
+Sub TXT_IMPORT_FINAL()
+Dim answer As Integer
+
+answer = MsgBox _
+                    ("This action will delete all current data from all sheets in this workbook." & _
+                    vbNewLine & _
+                    vbNewLine & "Are you sure you want to proceed?", _
+                    vbYesNo + vbQuestion, _
+                    "Empty sheets and select a new text file to import from")
+
+If answer = vbYes Then
+    Call Copy_Txt
+End If
+
+End Sub
+
+Private Sub Copy_Txt()
+    Dim fileToOpen As Variant
+    Dim fileName, target_wb, target_ws, sheetName As String
+
+    target_wb = ActiveWorkbook.Name
+    target_ws = ActiveSheet.Name
+    
+    Result.Cells.Delete
+    txt_import.Cells.Delete
+
+    Dim tbl As ListObject
+    For Each tbl In ActiveSheet.ListObjects
+        tbl.Unlist
+    Next
+    
+    fileToOpen = Application.GetOpenFilename("Text Files (*.txt), *.txt")
+
+Application.ScreenUpdating = False
+    
+    If fileToOpen <> False Then
+        Workbooks.OpenText fileName:=fileToOpen, _
+        DataType:=xlDelimited, _
+        Tab:=True, _
+        Other:=True, _
+        OtherChar:="|", _
+        ConsecutiveDelimiter:=True, _
+        Semicolon:=False, _
+        Comma:=False, _
+        Space:=False
+    Else
+        Application.ScreenUpdating = True
+        MsgBox "No file selected.", vbExclamation, "Please try again ..."
+        Exit Sub
+    End If
+     
+    fileName = Mid(fileToOpen, InStrRev(fileToOpen, "\") + 1)
+    sheetName = Left(ActiveWorkbook.Name, Len(ActiveWorkbook.Name) - 4)
+     
+    Windows(fileName).Activate
+    
+'--------------------------------------------------------------------
+'    Dim LastRow As Long
+'    Dim LastColumn As Long
+'
+'    'Find Last Row and Column
+'      LastRow = sht.Cells(sht.Rows.Count, StartCell.Column).End(xlUp).Row
+'      LastColumn = sht.Cells(StartCell.Row, sht.Columns.Count).End(xlToLeft).Column
+'
+'    'Select Range
+'      sht.Range(StartCell, sht.Cells(LastRow, LastColumn)).Copy
+'--------------------------------------------------------------------
+    
+    ActiveSheet.UsedRange.Copy      'should work in most cases, if not - uncomment the section above and comment this one
+
+    Application.DisplayAlerts = False
+        ActiveWorkbook.Close
+    Application.DisplayAlerts = True
+     
+    Workbooks(target_wb).Activate
+    Range("A8").Select
+    ActiveWorkbook.Sheets(target_ws).Paste
+    
+    Range("B11").Select
+     
+Application.ScreenUpdating = True
+     
+End Sub
