@@ -1,0 +1,55 @@
+Option Explicit
+'--------------------------------------------------------------------------------------------
+Sub VP_AutoFilterClearAll()
+    ActiveSheet.ListObjects("Table1").AutoFilter.ShowAllData
+End Sub
+
+'--------------------------------------------------------------------------------------------
+
+Sub VP_AutoFilterExclude_HardcodedValues()
+
+ActiveSheet.ListObjects("Table1").Range.AutoFilter _
+    Field:=1, _
+    Criteria1:=Array( _
+        "Finance", _
+        "FP&A", _
+        "Human Resources", _
+        "IT Support/Security", _
+        "Materials Management", _
+        "Plant Maintenance / PLM", _
+        "Sales and Distribution", _
+        "Supply Chain", _
+        "Treasury"), _
+    Operator:=xlFilterValues
+    
+Range("A1").Select
+    
+End Sub
+
+'--------------------------------------------------------------------------------------------
+
+Sub VP_FilterRangeCriteria()
+Dim ArrCrit As Variant
+
+ArrCrit = Sheet7.Range("H3:H13").Value
+ActiveSheet.ListObjects("Table1").Range.AutoFilter _
+    Field:=1, _
+    Criteria1:=Application.Transpose(ArrCrit), _
+    Operator:=xlFilterValues
+
+End Sub
+
+'--------------------------------------------------------------------------------------------
+
+Sub PivotFilter_SpecificItemsToSelect_Hardcoded()
+
+    With ActiveSheet.PivotTables("PivotTable1").PivotFields("User ID")
+    
+        .PivotItems("DDIC").Visible = True
+        .PivotItems("DANN00Z").Visible = True
+        .PivotItems("SWATM00C").Visible = True
+        .PivotItems("VEMA00C").Visible = True
+    
+    End With
+
+End Sub
