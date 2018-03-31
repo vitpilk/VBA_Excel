@@ -1,0 +1,28 @@
+Option Explicit
+Sub VP_wild_test()
+
+Dim r1, r2 As Range
+Set r1 = Sheet1.Range("A1:A6")
+Set r2 = Sheet1.Range("C1:C6")
+
+Dim i, j As Variant
+Dim testCheck As Boolean
+Dim arrResult, x As Long
+ReDim arrResult(1 To 200, 1 To 2)
+
+x = 1
+For Each i In r1
+    For Each j In r2
+        testCheck = j Like i 'i is the variable with wildcard chars
+        If testCheck = True Then
+            Debug.Print i, j
+            arrResult(x, 1) = i
+            arrResult(x, 2) = j
+            x = x + 1
+        End If
+    Next
+Next
+
+Sheet1.Range("E1:F20") = arrResult
+
+End Sub
