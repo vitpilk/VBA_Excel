@@ -1,0 +1,28 @@
+Sub makeCrossJoin()
+
+Dim List1, List2 As Range
+Set List1 = shList_1.Range("A1:A4")
+Set List2 = shList_2.Range("A1:A4")
+
+Dim ArrList1, ArrList2 As Variant
+ArrList1 = List1.Value
+ArrList2 = List2.Value
+
+Dim ArrLIM As Long
+ArrLIM = UBound(ArrList1) * UBound(ArrList2)
+
+ReDim ArrList3(1 To ArrLIM, 1 To 2)
+
+Dim i, j As Variant, x As Long
+x = 1
+For Each i In ArrList1
+    For Each j In ArrList2
+        ArrList3(x, 1) = i
+        ArrList3(x, 2) = j
+        x = x + 1
+    Next
+Next
+
+shCrossJoin.Range("A1:B" & ArrLIM) = ArrList3
+
+End Sub
