@@ -20,6 +20,6 @@ Function make_dict_of_dicts_from_two_colmn_array(arr)
 
     Next
 
-    Set make_dict_of_dicts = dict
+    Set make_dict_of_dicts_from_two_colmn_array = dict
     
 End Function
