@@ -1,0 +1,60 @@
+Option Explicit
+Sub BR_validation_v1()
+
+Dim rngBrTr, rngUserBr, rngUserTr As Range
+Dim arrBrTr, arrUserBr, arrUserTr As Variant
+Dim dctBrTr As New Scripting.Dictionary
+Dim dctUserBr As New Scripting.Dictionary
+Dim dctUserTr As New Scripting.Dictionary
+
+Set rngBrTr = Range("B2:C9")
+Set rngUserBr = Range("E2:F8")
+Set rngUserTr = Range("H2:I15")
+
+arrBrTr = rngBrTr
+arrUserBr = rngUserBr
+arrUserTr = rngUserTr
+
+'Dim i As Variant
+'For Each i In arrUserTr
+'Debug.Print i
+'Next
+
+Set dctBrTr = Module2.make_dict_of_dicts_from_two_colmn_array(arrBrTr)
+Set dctUserBr = Module2.make_dict_of_dicts_from_two_colmn_array(arrUserBr)
+Set dctUserTr = Module2.make_dict_of_dicts_from_two_colmn_array(arrUserTr)
+
+Dim Br, Tr, Trr, User As Variant
+
+        'For Each Br In dctBrTr.Keys
+        '    For Each Tr In dctBrTr(Br)
+        '        Debug.Print Br, Tr
+        '    Next
+        'Next
+        'Debug.Print '-'
+        '
+        'For Each User In dctUserBr.Keys
+        '    For Each Br In dctUserBr(User)
+        '        Debug.Print User, Br
+        '    Next
+        'Next
+        'Debug.Print '-'
+        '
+        'For Each User In dctUserTr.Keys
+        '    For Each Tr In dctUserTr(User)
+        '        Debug.Print User, Tr
+        '    Next
+        'Next
+        'Debug.Print '-'
+
+For Each User In dctUserBr.Keys
+    For Each Br In dctUserBr(User)
+        For Each Tr In dctBrTr(Br)
+            If Not dctUserTr(User).Exists(Tr) Then
+                Debug.Print User, Br, Tr
+            End If
+        Next
+    Next
+Next
+
+End Sub
