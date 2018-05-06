@@ -1,0 +1,42 @@
+Sub test_add_uniq_val_to_dict()
+
+Dim MyArr, MyVal As Variant
+Dim MyDict As New Scripting.Dictionary
+
+MyArr = Array(1, 2, 3, 2, 1, 2)
+prnt_1D_array (MyArr)
+Debug.Print ""
+
+For Each MyVal In MyArr
+    AddUniqValToDict MyDict, MyVal
+Next
+prnt_dict MyDict
+
+End Sub
+'-------------------------------------------------------------------------------------------------------------------
+Sub AddUniqValToDict(dict, val)
+''Sub AddUniqValToDict(dict As Dictionary, val As Variant)
+
+    If Not dict.Exists(val) Then dict.Add val, ""
+
+End Sub
+'-------------------------------------------------------------------------------------------------------------------
+Function prnt_1D_array(arrrayy)
+
+Dim i As Variant
+For Each i In arrrayy
+    Debug.Print i
+Next
+
+End Function
+'-------------------------------------------------------------------------------------------------------------------
+Function prnt_dict(dict As Dictionary)
+
+Dim i As Variant
+For Each i In dict
+    Debug.Print i
+Next
+
+End Function
+'-------------------------------------------------------------------------------------------------------------------
+
