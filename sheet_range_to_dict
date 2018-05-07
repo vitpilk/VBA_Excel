@@ -1,0 +1,63 @@
+Option Explicit
+
+Sub sheet_range_to_dict()
+
+Dim MyDeect As New Scripting.Dictionary
+
+Set MyDeect = _
+make_dict_of_dicts_from_two_col_on_WS(Sheet1)
+
+print_dict MyDeect
+
+End Sub
+
+Function make_dict_of_dicts_from_two_col_on_WS(wrksht As Worksheet)
+
+    Dim lastrow As Long, arr As Variant
+    lastrow = wrksht.Range("A" & wrksht.Rows.Count).End(xlUp).row
+    arr = wrksht.Range("A1:B" & lastrow).Value
+    
+    Dim MyDict As New Scripting.Dictionary
+
+    Set MyDict = make_dict_of_dicts_from_two_colmn_array(arr)
+    Set make_dict_of_dicts_from_two_col_on_WS = MyDict
+    
+End Function
+
+Function make_dict_of_dicts_from_two_colmn_array(arr)
+    
+    Dim row As Long, Kee, itm As String
+    Dim dict As New Scripting.Dictionary
+    
+    For row = LBound(arr, 1) + 1 To UBound(arr, 1) 'remove +1 if array has no header
+        Kee = arr(row, 1)
+        itm = arr(row, 2)
+        
+            If Not dict.Exists(Kee) Then
+                Dim list As New Scripting.Dictionary
+                list.Add itm, ""
+                dict.Add Key:=Kee, Item:=list
+            ElseIf dict.Exists(Kee) Then
+                If Not dict(Kee).Exists(itm) Then
+                    dict(Kee).Add itm, ""
+                End If
+            End If
+            Set list = Nothing
+
+    Next
+
+    Set make_dict_of_dicts_from_two_colmn_array = dict
+    
+End Function
+
+Sub print_dict(dict As Dictionary)
+
+Dim Kee, Val As Variant
+
+    For Each Kee In dict.Keys
+        For Each Val In dict(Kee)
+            Debug.Print Kee, Val
+        Next
+    Next
+
+End Sub
