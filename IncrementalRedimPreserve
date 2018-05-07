@@ -1,0 +1,27 @@
+Sub IncrementalRedimPreserve()
+
+Dim arrayindex, j, x As Long, mr As Range
+Dim myarray, i As Variant
+ReDim myarray(2)
+
+Set mr = Range("A1:A20")
+
+Debug.Print UBound(myarray)
+x = 1
+
+For Each i In mr
+
+    If x > UBound(myarray) Then
+       ReDim Preserve myarray(UBound(myarray) + 3)
+       Debug.Print UBound(myarray), i
+    End If
+
+    myarray(x) = i
+    x = x + 1
+Next
+
+End Sub
+
+'If arrayindex > UBound(myarray) Then
+'   ReDim Preserve myarray(UBound(myarray) + 2)
+'End If
