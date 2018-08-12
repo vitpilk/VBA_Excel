@@ -1,0 +1,66 @@
+Sub PopulateDictOfDicts_no_scripting_lib(dict As Object, key, item)
+' does not require MS Scripting Runtime library reference
+
+Set dict = CreateObject("Scripting.Dictionary")
+
+    If Not dict.Exists(key) Then
+        
+        Dim list As Object
+        Set list = CreateObject("Scripting.Dictionary")
+            list.Add item, ""
+            dict.Add key, list
+        Set list = Nothing
+        
+    Else
+        
+        If Not dict(key).Exists(item) Then
+            dict(key).Add item, ""
+        End If
+    
+    End If
+
+End Sub
+
+'-------------------------------------------------------------------------------------
+
+Sub PopulateDictOfDicts_ALT_VERSION(dict As Dictionary, key, item)
+' requires MS Scripting Runtime lib reference
+
+    If Not dict.Exists(key) Then
+        
+        dict.Add key, New Dictionary
+        dict(key).Add item, ""
+        
+    Else
+        
+        If Not dict(key).Exists(item) Then
+            dict(key).Add item, ""
+        End If
+    
+    End If
+
+End Sub
+
+'----------------------------------------------------------------------------------------
+
+Sub PopulateDictOfDicts(dict As Dictionary, key, item)
+' requires MS Scripting Runtime lib reference
+' older version - not optimal 
+
+    If Not dict.Exists(key) Then
+        
+        Dim list As New Scripting.Dictionary
+            list.Add item, ""
+            dict.Add key, list
+        Set list = Nothing
+        
+    Else
+        
+        If Not dict(key).Exists(item) Then
+            dict(key).Add item, ""
+        End If
+    
+    End If
+
+End Sub
+
